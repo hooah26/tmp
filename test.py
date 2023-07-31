@@ -1,4 +1,4 @@
-import cv2
+import test_cv2
 import numpy as np
 
 # Load YOLO
