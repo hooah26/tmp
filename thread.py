@@ -21,7 +21,8 @@ def rgb_camera(camera_index, window_name):
     if not cap.isOpened():
         print("Error: Could not open camera with index", camera_index)
         return
-
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
     while True:
         ret, frame = cap.read()
         if ret:
@@ -45,8 +46,8 @@ def depth_camera():
     # Configure depth and color streams
     pipeline = rs.pipeline()
     config = rs.config()
-    config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+    config.enable_stream(rs.stream.depth, 1280, 720, rs.format.z16, 30)
+    config.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
 
     # Start streaming
     pipeline.start(config)
