@@ -14,3 +14,8 @@ sudo make install
 
 
 export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.6/pyrealsense2
+
+
+https://docs.ultralytics.com/yolov5/tutorials/running_on_jetson_nano/#install-pytorch-and-torchvision
+
+https://opencourse.tistory.com/224
