@@ -19,3 +19,15 @@ export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.6/pyrealsense2
 https://docs.ultralytics.com/yolov5/tutorials/running_on_jetson_nano/#install-pytorch-and-torchvision
 
 https://opencourse.tistory.com/224
+
+
+
+wget https://files.pythonhosted.org/packages/5e/3f/5658c38579b41866ba21ee1b5020b8225cec86fe717e4b1c5c972de0a33c/pycuda-2019.1.2.tar.gz
+
+tar xvf pycuda-2019.1.2.tar.gz
+
+cd pycuda-2019.1.2
+
+python3 configure.py --cuda-root=/usr/local/cuda-10.2
+
+python3 setup.py install
