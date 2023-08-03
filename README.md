@@ -33,3 +33,6 @@ python3 configure.py --cuda-root=/usr/local/cuda-10.2
 python3 setup.py install
 https://github.com/prabhakar-sivanesan/OpenCV-rtsp-server/tree/master
 
+
+ rtsp://180.71.194.224:8554/video_stream
+
