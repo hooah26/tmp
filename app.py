@@ -20,7 +20,6 @@ while True:
 
     # Filter and draw only human detections
     for obj in detections:
-        print(ojb)
         if obj['class'] == 'person': # Assuming the human class is labeled as 'person'
             conf = obj['conf']
             box = obj['box']
