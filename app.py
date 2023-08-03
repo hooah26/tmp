@@ -13,9 +13,17 @@ while True:
     ret, frame = cap.read()
     frame = imutils.resize(frame, width=600)
     detections, t = model.Inference(frame)
+
+    # Calculate FPS
+    fps = 1 / t
+    fps_text = "FPS: {:.2f}".format(fps)
+
+    # Display FPS on the frame
+    cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+
     # for obj in detections:
     #    print(obj['class'], obj['conf'], obj['box'])
-    # print("FPS: {} sec".format(1/t))
+
     cv2.imshow("Output", frame)
     key = cv2.waitKey(1)
     if key == ord('q'):
