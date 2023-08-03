@@ -23,9 +23,11 @@ while True:
         if obj['class'] == 'person': # Assuming the human class is labeled as 'person'
             conf = obj['conf']
             box = obj['box']
-            x, y, w, h = box
+            x, y, w, h = map(int, box) # Convert the values to integers
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
             cv2.putText(frame, "Person: {:.2f}".format(conf), (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+
 
     # Display FPS on the frame
     cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
