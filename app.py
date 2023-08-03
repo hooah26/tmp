@@ -18,11 +18,17 @@ while True:
     fps = 1 / t
     fps_text = "FPS: {:.2f}".format(fps)
 
+    # Filter and draw only human detections
+    for obj in detections:
+        if obj['class'] == 'person': # Assuming the human class is labeled as 'person'
+            conf = obj['conf']
+            box = obj['box']
+            x, y, w, h = box
+            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+            cv2.putText(frame, "Person: {:.2f}".format(conf), (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
     # Display FPS on the frame
     cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-
-    # for obj in detections:
-    #    print(obj['class'], obj['conf'], obj['box'])
 
     cv2.imshow("Output", frame)
     key = cv2.waitKey(1)
@@ -31,4 +37,3 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-~                           
