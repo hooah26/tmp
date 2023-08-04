@@ -26,3 +26,16 @@ Traceback (most recent call last):
   File "/home/nano/OpenCV-rtsp-server/yoloDet.py", line 93, in Inference
     stream = cuda.Stream()
 pycuda._driver.LogicError: explicit_context_dependent failed: invalid device context - no currently active context?
+
+
+
+
+[TensorRT] INFO: [MemUsageSnapshot] deserializeCudaEngine end: CPU 659 MiB, GPU 3790 MiB
+[ WARN:0] global /home/nano/opencv/modules/videoio/src/cap_gstreamer.cpp (933) open OpenCV | GStreamer warning: Cannot query video position: status=0, value=-1, duration=-1
+Traceback (most recent call last):
+  File "stream_test.py", line 49, in on_need_data
+    detections, t = model.Inference(frame)
+  File "/home/nano/OpenCV-rtsp-server/yoloDet.py", line 93, in Inference
+    stream = cuda.Stream()
+pycuda._driver.LogicError: explicit_context_dependent failed: invalid device context - no currently active context?
+
