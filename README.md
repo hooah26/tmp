@@ -18,3 +18,11 @@ https://github.com/prabhakar-sivanesan/OpenCV-rtsp-server/tree/master
 rtsp://180.71.194.224:8554/video_stream
 
 https://github.com/aiortc/aiortc/tree/main
+
+
+Traceback (most recent call last):
+  File "stream_test.py", line 46, in on_need_data
+    detections, t = model.Inference(frame)
+  File "/home/nano/OpenCV-rtsp-server/yoloDet.py", line 93, in Inference
+    stream = cuda.Stream()
+pycuda._driver.LogicError: explicit_context_dependent failed: invalid device context - no currently active context?
