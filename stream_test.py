@@ -1,21 +1,15 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jan  20 02:07:13 2019
-
-@author: prabhakar
-"""
 # import necessary argumnets 
 import gi
 import cv2
 import argparse
+from yoloDet import YoloTRT
+import imutils
 
 # import required library like Gstreamer and GstreamerRtspServer
 gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 model = YoloTRT(library="yolov7/build/libmyplugins.so", engine="yolov7/build/yolov7-tiny.engine", conf=0.5, yolo_ver="v7")
 from gi.repository import Gst, GstRtspServer, GObject
-
 
 class SensorFactory(GstRtspServer.RTSPMediaFactory):
     def __init__(self, **properties):
@@ -38,14 +32,15 @@ class SensorFactory(GstRtspServer.RTSPMediaFactory):
             if ret:
                 # It is better to change the resolution of the camera 
                 # instead of changing the image shape as it affects the image quality.
-                frame = cv2.resize(frame, (opt.image_width, opt.image_height), \
-                    interpolation = cv2.INTER_LINEAR)
+                # frame = cv2.resize(frame, (opt.image_width, opt.image_height), \
+                    # interpolation = cv2.INTER_LINEAR)
+                frame = imutils.resize(frame, height=opt.image_height ,width=opt.image_width)
 
                 detections, t = model.Inference(frame)
                 fps = 1 / t
                 fps_text = "FPS: {:.2f}".format(fps)
-                
-                
+
+
                 data = frame.tostring()
                 buf = Gst.Buffer.new_allocate(None, len(data), None)
                 buf.fill(0, data)
@@ -77,7 +72,7 @@ class SensorFactory(GstRtspServer.RTSPMediaFactory):
                         key = cv2.waitKey(1)
                         if key == ord('q'):
                             break
-                            
+
     # attach the launch string to the override method
     def do_create_element(self, url):
         return Gst.parse_launch(self.launch_string)
