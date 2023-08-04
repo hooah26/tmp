@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Jan  20 02:07:13 2019
+
+@author: prabhakar
+"""
 # import necessary argumnets 
 import gi
 import cv2
@@ -5,11 +12,14 @@ import argparse
 from yoloDet import YoloTRT
 import imutils
 
+
+
 # import required library like Gstreamer and GstreamerRtspServer
 gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 model = YoloTRT(library="yolov7/build/libmyplugins.so", engine="yolov7/build/yolov7-tiny.engine", conf=0.5, yolo_ver="v7")
 from gi.repository import Gst, GstRtspServer, GObject
+
 
 class SensorFactory(GstRtspServer.RTSPMediaFactory):
     def __init__(self, **properties):
@@ -34,11 +44,24 @@ class SensorFactory(GstRtspServer.RTSPMediaFactory):
                 # instead of changing the image shape as it affects the image quality.
                 # frame = cv2.resize(frame, (opt.image_width, opt.image_height), \
                     # interpolation = cv2.INTER_LINEAR)
-                frame = imutils.resize(frame, height=opt.image_height ,width=opt.image_width)
+                frame = imutils.resize(frame, width=600)
+                # frame = cv2.resize(frame, (opt.image_width, opt.image_height), interpolation=cv2.INTER_LINEAR)
+                detections, t = self.model.Inference(frame)
 
-                detections, t = model.Inference(frame)
                 fps = 1 / t
                 fps_text = "FPS: {:.2f}".format(fps)
+
+                for obj in detections:
+                    if obj['class'] == 'person':  # Assuming the human class is labeled as 'person'
+                        conf = obj['conf']
+                        box = obj['box']
+                        x, y, w, h = map(int, box)  # Convert the values to integers
+                        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                        cv2.putText(frame, "Person: {:.2f}".format(conf), (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
+                                    (0, 255, 0), 2)
+
+                        # Display FPS on the frame
+                        cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
 
                 data = frame.tostring()
@@ -56,22 +79,6 @@ class SensorFactory(GstRtspServer.RTSPMediaFactory):
                 if retval != Gst.FlowReturn.OK:
                     print(retval)
 
-                for obj in detections:
-                    if obj['class'] == 'person':  # Assuming the human class is labeled as 'person'
-                        conf = obj['conf']
-                        box = obj['box']
-                        x, y, w, h = map(int, box)  # Convert the values to integers
-                        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                        cv2.putText(frame, "Person: {:.2f}".format(conf), (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                                    (0, 255, 0), 2)
-
-                        # Display FPS on the frame
-                        cv2.putText(frame, fps_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-
-                        cv2.imshow("Output", frame)
-                        key = cv2.waitKey(1)
-                        if key == ord('q'):
-                            break
 
     # attach the launch string to the override method
     def do_create_element(self, url):
