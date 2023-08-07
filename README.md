@@ -39,3 +39,9 @@ Traceback (most recent call last):
     stream = cuda.Stream()
 pycuda._driver.LogicError: explicit_context_dependent failed: invalid device context - no currently active context?
 
+
+
+$ export PATH=/usr/local/cuda-10.2/bin${PATH:+:${PATH}}
+$ export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
+$ python3 -m pip install pycuda --user
+
