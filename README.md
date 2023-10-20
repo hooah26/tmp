@@ -21,5 +21,5 @@ OSError: libcudart.so.10.2: cannot open shared object file: No such file or dire
 \
 
 
-
+https://www.youtube.com/watch?v=NPCJF8YL2Gc
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
