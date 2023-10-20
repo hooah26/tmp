@@ -18,3 +18,8 @@ Traceback (most recent call last):
   File "/usr/lib/python3.8/ctypes/__init__.py", line 373, in __init__
     self._handle = _dlopen(self._name, mode)
 OSError: libcudart.so.10.2: cannot open shared object file: No such file or directory
+\
+
+
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.2/lib64
