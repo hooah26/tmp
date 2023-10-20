@@ -8,3 +8,13 @@ https://www.aihub.or.kr/web-nas/aihub21/files/public/%EC%9D%B4%EB%85%B8%EB%A6%AD
 
 
 https://chat.openai.com/share/a791febf-efe2-4652-b0be-6f3ca7610333
+
+
+Traceback (most recent call last):
+  File "test.py", line 12, in <module>
+    model = YoloTRT(library="./libmyplugins.so", engine="./yolov7-tiny.engine", conf=0.5, yolo_ver="v7")
+  File "/home/xavier/websocket_user/yoloDet.py", line 38, in __init__
+    ctypes.CDLL(library)
+  File "/usr/lib/python3.8/ctypes/__init__.py", line 373, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.10.2: cannot open shared object file: No such file or directory
